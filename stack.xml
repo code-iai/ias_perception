@@ -1,0 +1,11 @@
+<stack>
+  <description brief="ias_perception">ias_perception</description>
+  <author>Maintained by Dejan Pangercic, Uli Klank</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ias_perception</url>
+  <depend stack="ros" />
+  <depend stack="ros_comm" />
+  <depend stack="vision_opencv" />
+  <depend stack="image_common" />
+</stack>
