@@ -1,0 +1,36 @@
+<package>
+  <description>
+    An extended and optimized implementation of the state-of-theart
+    local curve fitting algorithm named Contracting Curve Density (CCD) algorithm, originally
+    developed by Hanek et al. 
+    The CCD algorithm can be best described as follows. Given one or multiple images as
+    input data and a parametric curve model with a priori distribution of model parameters,
+    through curve-fitting process, we estimate the model parameters which determine the approximation
+    of the posterior distribution in order to make the curve models best matching
+    the image data. In order to improve the stability, accuracy and robustness over the original
+    implementation we introduce the following improvements. Firstly, we use the logistic
+    sigmoid function instead of a Gaussian error function which renders a curve-fitting problem
+    as a Gaussian logistic regression problem known in the field of pattern recognition.
+    Secondly, a quadratic or a cubic B-spline curve is used to model the parametric curve to
+    avoid the Runge phenomenon without increasing the degree of the B-spline. Thirdly, the
+    system supports both planar affine (6-DOF) and three-dimensional affine (8-DOF) shapespace.
+    The latter affine space can avoid curve mismatching caused by major viewpoint
+    changes. Lastly, in order to avoid manual intervention by the user, the developed system
+    also supports robust global initial curve initialization modules based on both keypoint
+    feature matching and back-projections from the 3D point clouds.
+  </description>
+
+  <author>Shulei Zhu, Dejan Pangercic</author>
+  <license>BSD</license>
+  <url></url>
+  <depend package="roscpp" />
+  <depend package="opencv2" /> 
+  <depend package="cv_bridge" />
+  <depend package="image_transport"/>
+
+  <!-- <export> -->
+  <!--   <cpp cflags="-I${prefix}/include/" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib "/> -->
+  <!--   <image_algos plugin="${prefix}/plugins.xml"/> -->
+  <!-- </export> -->
+</package>
+
