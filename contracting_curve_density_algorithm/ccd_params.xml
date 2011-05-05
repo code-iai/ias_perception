@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<gamma_1>0.5</gamma_1>
+<gamma_2>5</gamma_2>
+<gamma_3>7</gamma_3>
+<gamma_4>5</gamma_4>
+<alpha>1.2</alpha>
+<beta>0.06</beta>
+<kappa>0.5</kappa>
+<c>0.25</c>
+<h>50</h>
+<delta_h>1</delta_h>
+<resolution>200</resolution>
+<degree>4</degree>
+<phi_dim>6</phi_dim>
+</opencv_storage>
