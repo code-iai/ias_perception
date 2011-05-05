@@ -37,8 +37,8 @@ ccd_tracker:ccd_tracker.cpp $(OBJECTS) sift_init.o
 contour:contour.cpp sift_init.o
 	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp sift_init.o  $(LDFLAGS)
 
-sift_init.o:sift_init.c
-	$(GCC) $(INCDIR) $(CFLAGS) -c -o sift_init.o sift_init.c
+sift_init.o:sift_init.cpp
+	$(CC) $(INCDIR) $(CFLAGS) -c -o sift_init.o sift_init.cpp
 sift:sift.c sift_init.o
 	$(GCC) $(INCDIR) $(CFLAGS)  -o $@ $@.c sift_init.o $(LDFLAGS)
 ccd:ccd.cpp ccd.h $(OBJECTS)

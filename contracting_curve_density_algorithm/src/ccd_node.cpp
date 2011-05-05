@@ -35,7 +35,7 @@ class CCDNode
     // n_.param("image_topic", image_topic_, std::string("/narrow_stereo/left/image_rect"));
     // n_.param("image_topic", image_topic_, std::string("/wide_stereo/left/image_rect_color"));
     // n_.param("image_topic", image_topic_, std::string("/camera/rgb/image_color"));
-   n_.param("image_topic", image_topic_, std::string("/prosilica/image_raw"));
+    n_.param("image_topic", image_topic_, std::string("/prosilica/image_raw"));
     // n_.param("polygon_points_topic", polygon_points_topic_, std::string("/pointcloud_to_image_projector_opencv_node/polygon_points"));
 //    n_.param("init_method", init_method_, 1);
     init_method_ = init_method;
@@ -137,7 +137,7 @@ class CCDNode
       cv_image.copyTo(ccd.image);
       if (count_ == 1)
       {
-        cv::imwrite("book_test.png", ccd.image);
+        // cv::imwrite("book_test.png", ccd.image);
         if (init_method_ == 0) //manually 
           contourManually();
         else if (init_method_ == 1) //initialized from SIFT
@@ -173,15 +173,14 @@ class CCDNode
       }      
       ccd.run_ccd();
        // cv::imshow("CCD", ccd.canvas);
-      if(count_ == 1)
-      {
-        while(1)
-        {
-          key = cv::waitKey(10);
-          if(key == 27) break;
-        }
-      }
-        
+      // if(count_ == 1)
+      // {
+      //   while(1)
+      //   {
+      //     key = cv::waitKey(10);
+      //     if(key == 27) break;
+      //   }
+      // }        
      std::stringstream name;
      name << count_;
      cv::imwrite(name.str() + ".png", ccd.canvas);
