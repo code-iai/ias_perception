@@ -22,7 +22,7 @@
 
   <author>Shulei Zhu, Dejan Pangercic</author>
   <license>BSD</license>
-  <url></url>
+  <url>http://ros.org/wiki/model_completion</url>
   <depend package="roscpp" />
   <depend package="opencv2" /> 
   <depend package="cv_bridge" />
