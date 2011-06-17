@@ -3,9 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "ccd/sift_init.h"
 #include "ccd/bspline.h"
 #include "ccd/ccd.h"
+#include "auto_init.h"
 #include <fstream>
 
 using namespace cv;
@@ -37,18 +37,14 @@ void on_mouse(int event, int x, int y, int flags, void *param )
 void contourSift(CCD &my_ccd)
 {
   int row;
-  IplImage sift_tpl = my_ccd.tpl;
-  IplImage sift_tpl_img = my_ccd.canvas;
-  IplImage *tpl_ptr = &sift_tpl;
-  IplImage *tpl_img_ptr = &sift_tpl_img;
   // CvMat points_mat = sift_init(tpl_ptr, tpl_img_ptr, 30);
-  CvMat points_mat = sift_init(tpl_ptr, tpl_img_ptr, 30);
-  CvMat *points_mat_ptr = &points_mat;
-  double *ptr = points_mat_ptr->data.db;
-  int step = points_mat.step/sizeof(double);
-  for (row = 0; row < points_mat_ptr->rows; ++row)
+  AutoInit *ai = new AutoInit(0);
+  cv::Mat points_mat = ai->init(my_ccd.tpl, my_ccd.canvas, 30);
+  double *ptr;
+  for (row = 0; row < points_mat.rows; ++row)
   {
-    my_ccd.pts.push_back(cv::Point3d((ptr+step*row)[0]/(ptr+step*row)[2], (ptr+step*row)[1]/(ptr+step*row)[2], 1));
+    ptr = points_mat.ptr<double>(row);
+    my_ccd.pts.push_back(cv::Point3d(ptr[0]/ptr[2], ptr[1]/ptr[2], 1));
   }
 }
 
@@ -87,7 +83,7 @@ int main (int argc, char * argv[])
   {
     if( string(argv[i]) == "-m" )
     {
-      if( sscanf(argv[++i], "%d", &init_method) != 1 || (init_method <= 0  ||  init_method >=3))
+      if( sscanf(argv[++i], "%d", &init_method) != 1 || (init_method < 0  ||  init_method >3))
       {
         cout << "invalid initialization method" << endl;
         return print_help();
@@ -137,7 +133,12 @@ int main (int argc, char * argv[])
   my_ccd.image = cv::imread(image_path, 1);
   if(template_path != "")
     my_ccd.tpl = cv::imread(template_path, 1 );
-  contourManually(my_ccd);
+  if(init_method == 0)
+    contourManually(my_ccd);
+  else if(init_method == 1)
+    contourSift(my_ccd);
+  // else if(init_method == 3)
+  //   contourP()
   if((int)my_ccd.pts.size() > my_ccd.degree())
   {
     for (int i = 0; i < my_ccd.degree(); ++i)

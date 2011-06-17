@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-#include "ccd/sift_init.h"
+#include "ccd/auto_init.h"
 #include "ccd/bspline.h"
 #include "ccd/ccd.h"
 cv::Mat canvas_tmp;

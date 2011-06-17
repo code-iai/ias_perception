@@ -12,7 +12,7 @@ INCDIR =-I. `pkg-config --cflags opencv` -I../include -I../../sift/include -I../
 LDDIR = -L./lib -L../../sift/lib
 CFLAGS = -O2 -g3 -Wall -DLINUX $(EXTRA) $(LDDIR)
 LDLIBS =
-LDFLAGS = $(LDLIBS) -lm `pkg-config --libs opencv` `pkg-config --libs gtk+-2.0` ../../sift/lib/libfeat$(BIT).a
+LDFLAGS = $(LDLIBS) -lm `pkg-config --libs opencv` `pkg-config --libs gtk+-2.0` #../../sift/lib/libfeat$(BIT).a
 OBJECTS=bspline.o ccd.o
 $(OBJECTS): %.o: %.cpp
 	$(CC) $(INCDIR) -c $(CFLAGS) $< -o $@
@@ -30,12 +30,12 @@ curve:curve.cpp $(OBJECTS)
 	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $(OBJECTS) $< $(LDFLAGS)
 kmeans:kmeans.cpp
 	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $< $(LDFLAGS)
-test:test.cpp $(OBJECTS) sift_init.o
-	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp sift_init.o $(OBJECTS) $(LDFLAGS)
-ccd_tracker:ccd_tracker.cpp $(OBJECTS) sift_init.o
-	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp sift_init.o $(OBJECTS) $(LDFLAGS)
+test:test.cpp $(OBJECTS) auto_init.o
+	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp auto_init.o $(OBJECTS) $(LDFLAGS)
+ccd_tracker:ccd_tracker.cpp $(OBJECTS) auto_init.o
+	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp auto_init.o $(OBJECTS) $(LDFLAGS)
 contour:contour.cpp sift_init.o
-	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp sift_init.o  $(LDFLAGS)
+	$(CC) $(INCDIR) $(CFLAGS)  -o $@ $@.cpp auto_init.o  $(LDFLAGS)
 
 sift_init.o:sift_init.cpp
 	$(CC) $(INCDIR) $(CFLAGS) -c -o sift_init.o sift_init.cpp

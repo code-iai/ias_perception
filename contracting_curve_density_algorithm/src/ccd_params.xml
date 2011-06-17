@@ -10,7 +10,7 @@
 <c>0.25</c>
 <h>50</h>
 <delta_h>1</delta_h>
-<resolution>200</resolution>
+<resolution>300</resolution>
 <degree>4</degree>
 <phi_dim>6</phi_dim>
 </opencv_storage>
