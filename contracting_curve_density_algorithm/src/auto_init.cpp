@@ -4,7 +4,6 @@
 #include "auto_init.h"
 #include <iostream>
 
-
 void AutoInit::extract_descriptors(cv::Mat& img1, cv::Mat& img2)
 {
   // cv::FeatureDetector* fd  = new cv::SiftFeatureDetector(cv::SIFT::DetectorParams::GET_DEFAULT_THRESHOLD(),
