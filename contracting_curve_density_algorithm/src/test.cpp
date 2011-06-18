@@ -34,16 +34,15 @@ void on_mouse(int event, int x, int y, int flags, void *param )
   }
 }
 
-void contourSift(CCD &my_ccd)
+void contourFPM(CCD &my_ccd)
 {
-  int row;
-  // CvMat points_mat = sift_init(tpl_ptr, tpl_img_ptr, 30);
-  AutoInit *ai = new AutoInit(0);
-  cv::Mat points_mat = ai->init(my_ccd.tpl, my_ccd.canvas, 30);
+  // CvMat points_mat = FPM_init(tpl_ptr, tpl_img_ptr, 30);
+  AutoInit *ai = new AutoInit(1,0, 30);
+  ai->init(my_ccd.tpl, my_ccd.canvas);
   double *ptr;
-  for (row = 0; row < points_mat.rows; ++row)
+  for (int row = 0; row < (ai->control_points).rows; ++row)
   {
-    ptr = points_mat.ptr<double>(row);
+    ptr = (ai->control_points).ptr<double>(row);
     my_ccd.pts.push_back(cv::Point3d(ptr[0]/ptr[2], ptr[1]/ptr[2], 1));
   }
 }
@@ -136,7 +135,7 @@ int main (int argc, char * argv[])
   if(init_method == 0)
     contourManually(my_ccd);
   else if(init_method == 1)
-    contourSift(my_ccd);
+    contourFPM(my_ccd);
   // else if(init_method == 3)
   //   contourP()
   if((int)my_ccd.pts.size() > my_ccd.degree())
