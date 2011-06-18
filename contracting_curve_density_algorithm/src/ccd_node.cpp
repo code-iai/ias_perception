@@ -9,7 +9,7 @@
 #include <opencv/highgui.h>
 #include <string.h>
 #include <iostream>
-#include "ccd/sift_init.h"
+#include "ccd/auto_init.h"
 #include <ccd/bspline.h>
 #include <ccd/ccd.h>
 #include <geometry_msgs/PolygonStamped.h>
@@ -94,23 +94,17 @@ class CCDNode
     return image;
   }
 
-  void contourSift()
+void contourFMP()
+{
+  AutoInit *ai = new AutoInit(0,0, 30);
+  ai->init(ccd.tpl, ccd.canvas);
+  double *ptr;
+  for (int row = 0; row < (ai->control_points).rows; ++row)
   {
-    int row;
-    IplImage sift_tpl = ccd.tpl;
-    IplImage sift_tpl_img = ccd.canvas;
-    IplImage *tpl_ptr = &sift_tpl;
-    IplImage *tpl_img_ptr = &sift_tpl_img;
-    // CvMat points_mat = sift_init(tpl_ptr, tpl_img_ptr, 30);
-    CvMat points_mat = sift_init(tpl_ptr, tpl_img_ptr, 30);
-    CvMat *points_mat_ptr = &points_mat;
-    double *ptr = points_mat_ptr->data.db;
-    int step = points_mat.step/sizeof(double);
-    for (row = 0; row < points_mat_ptr->rows; ++row)
-    {
-      pts_.push_back(cv::Point3d((ptr+step*row)[0]/(ptr+step*row)[2], (ptr+step*row)[1]/(ptr+step*row)[2], 1));
-    }
+    ptr = (ai->control_points).ptr<double>(row);
+    pts_.push_back(cv::Point3d(ptr[0]/ptr[2], ptr[1]/ptr[2], 1));
   }
+}
 
   
   void contourManually()
@@ -129,7 +123,6 @@ class CCDNode
   void imageCallback(const sensor_msgs::ImageConstPtr& msg_ptr)
   {
       count_++;
-      char key;
       cv::Mat cv_image = readImage(msg_ptr);
       std::cerr << "col: " <<cv_image.cols << "  rows:" <<  cv_image.rows<< std::endl;
       std::cerr << "init_method_: " << init_method_ << std::endl;
@@ -143,7 +136,7 @@ class CCDNode
         else if (init_method_ == 1) //initialized from SIFT
         {
           ccd.tpl = cv::imread("data/book.png", 1);
-          contourSift();
+          contourFMP();
         }
         else if (init_method_ == 2) //initialized from projected Point Cloud
         {

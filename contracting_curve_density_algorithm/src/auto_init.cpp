@@ -1,7 +1,7 @@
 #include <opencv/cv.h>
 #include <opencv/cvaux.h>
 #include <opencv/highgui.h>
-#include "auto_init.h"
+#include "ccd/auto_init.h"
 #include <iostream>
 
 AutoInit::AutoInit():dp_extract_method(0),dp_match_method(0), inteval(0){}
