@@ -8,7 +8,7 @@ endif
 CC = g++
 GCC= gcc
 EXTRA = 
-INCDIR =-I. `pkg-config --cflags opencv` -I../include -I../include
+INCDIR =-I. `pkg-config --cflags opencv` -I../include -I../include -I$(shell rospack find roscpp)/include -I$(shell rospack find sensor_msgs)/include -I$(shell rospack find image_transport)/include -I$(shell rospack find geometry_msgs)/msg_gen/cpp/include -I$(shell rospack find cv_bridge)/include
 LDDIR = -L./lib
 CFLAGS = -O2 -g3 -Wall -DLINUX $(EXTRA) $(LDDIR)
 LDLIBS =

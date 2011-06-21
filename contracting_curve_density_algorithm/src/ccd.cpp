@@ -647,7 +647,7 @@ void CCD::run_ccd()
         norm += delta_Phi.at<double>(i, 0)*delta_Phi.at<double>(i, 0);
     }
     norm = cv::sqrt(norm);
-    std::cerr << "iter: " << iter << "   tol: " << tol  << " norm: " << cv::norm(delta_Phi, cv::NORM_L2)  << " norm_tmp:" << norm<< std::endl;
+    std::cerr << "iter: " << iter << "   tol: " << tol  << " norm: " << cv::norm(delta_Phi, cv::NORM_L2)  << " norm_tmp:" << norm << " params.h: " << params_.h << std::endl;
     // if(iter == 19)
     //   for (int i = 0; i < params_.resolution; ++i){
     //     int j = (i+1)%params_.resolution;
@@ -656,14 +656,19 @@ void CCD::run_ccd()
 
     std::stringstream name;
     name << iter;
-    cv::imwrite(name.str() + "c.png", canvas_tmp);
+    cv::imwrite(name.str() + ".png", canvas_tmp);
     canvas_tmp.release();
     // cv::imwrite(name.str() + ".png", canvas);
 
     // cv::imshow("CCD", canvas);    
     // cv::waitKey(200);
 
-    if(iter >= 20)
+    if(iter >=1 && tol < 1 && params_.h > 10)
+    {
+      params_.h = params_.h/sqrt(2);
+    }
+    
+    if(iter >= 1 && tol < 0.001)
     {
       for (int i = 0; i < params_.resolution; ++i)
       {

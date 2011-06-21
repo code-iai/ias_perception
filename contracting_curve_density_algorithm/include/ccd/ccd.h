@@ -1,4 +1,3 @@
-// 
 // Software License Agreement (BSD License)
 // 
 //   Copyright (c) 2011, Shulei Zhu <schuleichu@gmail.com>
