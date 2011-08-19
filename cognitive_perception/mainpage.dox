@@ -1,0 +1,223 @@
+/**
+\mainpage
+\htmlinclude manifest.html
+
+
+Cognitive Perception (CoP)
+
+Organizes and connects  perception mechanisms.
+
++++Installation: How to install CoP:+++
+
+Get the current lastest version of cognitive
+
+svn co https://tum-ros-pkg.svn.sourceforge.net/svnroot/tum-ros-pkg tum-ros-pkg
+
+Add the folder you check out tum-ros-pkg to your ROS_PACKAGE_PATH.
+
+++ If you have HALCON ++
+
+If you have HALCON (http://www.halcon.com) you can use all plugins defined in
+cop_halcon_plugin (including Camera drivers, CAD matching, Template matching, color classification, ...),
+otherwise only cop_sr4_plugin and simple_plugins are available.
+
+Make sure the your $HALCONROOT ist set correctly to the installation directory
+of halcon and the $HALCONARCH spcifies your system (usually "x64-linux2.4-gcc40").
+
+++ If you DO NOT have HALCON ++
+
+Do the following:
+
+# roscd cop_halcon_plugin
+
+# touch ROS_BUILD_BLACKLIST
+
+** Always:
+
+Do the following:
+
+# rosmake cop
+
+cop is a package that loads an example of a configuration for cop from http://www9.in.tum.de/~klank/cop_resource.tar.gz
+and this package depends on cognitive perception, locate object server and all plugins.
+
+Now everything should be able to run.
+
+Additionally you can build the cop_rviz_plugin with
+
+# rosmake cop_rviz_plugin
+
+++ Testing (this example works only with HALCON) ++
+
+Download
+
+http://www9.in.tum.de/~klank/trial1_2010-02-02-18-03-51.bag
+
+Then open 4 consoles and start the 4 programs (don't use launch files to get a better feeling what is happening).
+Start the following programs:
+
+1# roscore
+
+2# rosrun jlo jlo
+
+3# rosplay trial1_2010-02-02-18-03-51.bag
+
+4# roscd cop/resource; ../../cognitive_perception/cop_srv remote_cop_config.ini
+
+Additionally you could start rviz and add a new display CopAnswerDiplay and subscribe to the default topic of test_client::test_cop "/tracking/out"
+
+Now you could see, if you additionally subscribe to /tf and a camera (e.g. /cop/rightcamera) how our robot drives through our kitchen and looks at a table.
+
+Remeber to stop the rosplay at a certain point when you see the table.
+
++++Usage: How to call cop +++
+
+
+To show the basic functionality of CoP we will use the debug client for the cop_srv, which is in the package test_client:
+
+# rosmake test_client
+
+NOTICE: CoP is not based on tf but on the located object service (jlo), which is aware of all tf transformation, because it works with Position covariances.
+So, we first call jlo to find out which id was assigned to the swissranger:
+
+# rosrun test_client query_jlo /sr4
+This will result in something like:
+
+# Showing PosId 147 (/sr4) with parent 143:
+
+#-0.999952 0.000413 0.009839 -0.061978
+
+#-0.000207 -0.999782 0.020872 0.001763
+
+#0.009845 0.020869 0.999734 -0.037964
+
+#0.000000 0.000000 0.000000 1.000000
+
+#Cov:
+
+#0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+#0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+#0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+#0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+#0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+#0.000000 0.000000 0.000000 0.000000 0.000000 0.000000
+
+#Type: 1
+
+#pos dist: 0.072703
+
+In this case the swissranger was assigned to 147.
+
+
+++ Understand test_cop: ++
+
+# rosrun test_client test_cop
+
+This should result in somwthing like this:
+
+# ClassName can be Cluster, Mug, IceTea, black, white, AssamBlend, ...
+
+# LoID is a search space (use querylo to resolve tf-names to LoIDs)
+
+# NumObjects specifies the maximum number of objects returned
+
+# Command Defaul is 0:=Locate 256:=Track 768:=Refine 2048:=StopTrack
+
+
+
+++ CoP Secondary Search space generation: ++
+
+cop can use PlaneClusters (thanks at Radu Rusu and Dejan Pangercic) to create search spaces, use
+this functionality to also test the visualization in rviz:
+
+# rosrun test_client test_cop Cluster 147 5
+
+This should result in something like this:
+
+
+#Called cop
+
+#got answer from cop! (Errors: )
+
+#Found Obj nr 1050 with prob 1.000000 at pos 328
+
+#  Cluster
+
+#Found Obj nr 1053 with prob 0.375639 at pos 330
+
+#  Cluster
+
+#Found Obj nr 1056 with prob 0.097121 at pos 329
+
+#  Cluster
+
+#Found Obj nr 1059 with prob 0.082478 at pos 331
+
+#  Cluster
+
+#Found Obj nr 1062 with prob 0.067570 at pos 332
+
+#  Cluster
+
+#End!
+
+This created new object instances in cop with object indices (here the column with 1050, 1053, 1056, 1059, 1062)
+Those objects are located at the LOIDs (like 147 of our swissranger), which are in the last column (with the values here 328, 330, 329, 331 and 332).
+
+++ CoP Object Refinement: ++
+
+Cop can now learn properties of those clusters. Tell cop to "Refine" one of the clusters by doing this:
+
+# rosrun test_client test_cop 1050 328 1 768
+
+With the object id and the corresponding position you got by the last call. 1 means its one object and 768 is the command for Refine (=0x300).
+
+This should result in something like:
+
+# Called cop
+
+# got answer from cop! (Errors: )
+
+# Found Obj nr 1050 with prob 0.000000 at pos 328
+
+#  Cluster  black  Texture_1066
+
+# End!
+
+which means that you learned now have learned two additional properties:  black and Texture_1066.
+Those are references to a color classification result and a newly learned texture.
+
+++ CoP Locate a specific object: ++
+
+
+# rosrun test_client test_cop 1050
+
+
+
+
+
++++ API: Interfaces that can be used by plugins +++
+
+The following plugins can be implemented and can be loaded by CoP.
+
+\see cop::Descriptor
+
+\see cop::Sensor
+
+\see cop::Reading
+
+\see cop::LocateAlgorithm
+
+\see cop::RefineAlgorithm
+
+\see cop::ProveAlgortihm
+
+\see cop::AttentionAlgorithm
+
+
+*/

@@ -1,0 +1,20 @@
+<package>
+  <description>
+        Cognitive Perception Server
+
+         Perception interface to highlevel planning  (kipla)
+
+  </description>
+  <author>Ulrich F Klank</author>
+  <license>GPL</license>
+  <depend package="roscpp" />
+  <depend package="vision_srvs" />
+  <depend package="sensor_msgs" />
+  <depend package="lo" />
+  <depend package="ann" />
+  <depend package="pluginlib" />
+  <export>
+      <cpp cflags="-I${prefix}/include"  lflags="-L${prefix}/lib -lcop"/>
+      <rosdoc config="cop_doc.yaml"/>
+  </export>
+</package>
