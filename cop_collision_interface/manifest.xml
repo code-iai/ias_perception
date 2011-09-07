@@ -1,0 +1,18 @@
+<package>
+  <description brief="cop_collision_interface">
+
+     cop_collision_interface
+
+  </description>
+  <author>Ulrich Friedrich Klank</author>
+  <license>GPL</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cop_collision_interface</url>
+  <depend package="cop_sr4_plugins"/>
+  <depend package="cognitive_perception"/>
+  <depend package="tabletop_collision_map_processing"/>
+  <depend package="mapping_msgs"/>
+
+</package>
+
+

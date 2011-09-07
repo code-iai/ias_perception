@@ -1,0 +1,61 @@
+--- include/ANN/ANN.h.orig	2010-06-08 13:24:11.000000000 -0700
++++ include/ANN/ANN.h	2010-06-08 13:25:12.000000000 -0700
+@@ -111,11 +111,11 @@
+ //----------------------------------------------------------------------
+ #ifdef ANN_NO_LIMITS_H					// limits.h unavailable
+   #include <cvalues>					// replacement for limits.h
+-  const double ANN_DBL_MAX = MAXDOUBLE;	// insert maximum double
++  const double ANN_DBL_MAX = MAXFLOAT;	// insert maximum double
+ #else
+   #include <climits>
+   #include <cfloat>
+-  const double ANN_DBL_MAX = DBL_MAX;
++  const float ANN_DBL_MAX = FLT_MAX;
+ #endif
+ 
+ #define ANNversion 		"1.1.2"			// ANN version and information
+@@ -155,8 +155,8 @@
+ //		not occur in distance calculation.
+ //----------------------------------------------------------------------
+ 
+-typedef double	ANNcoord;				// coordinate data type
+-typedef double	ANNdist;				// distance data type
++typedef float ANNcoord;				// coordinate data type
++typedef float ANNdist;				// distance data type
+ 
+ //----------------------------------------------------------------------
+ //	ANNidx
+@@ -217,9 +217,9 @@
+ //----------------------------------------------------------------------
+ 
+ #ifdef DBL_DIG							// number of sig. bits in ANNcoord
+-	const int	 ANNcoordPrec	= DBL_DIG;
++	const int	 ANNcoordPrec	= FLT_DIG;
+ #else
+-	const int	 ANNcoordPrec	= 15;	// default precision
++	const int	 ANNcoordPrec	= 6;	// default precision
+ #endif
+ 
+ //----------------------------------------------------------------------
+--- test/rand.cpp.orig	2010-06-08 13:25:48.000000000 -0700
++++ test/rand.cpp	2010-06-08 13:27:02.000000000 -0700
+@@ -392,7 +392,7 @@
+ 	ANNpointArray		pa,				// point array
+ 	int					n,				// number of points
+ 	int					dim,			// dimension
+-	double				*control,		// control vector
++	ANNcoord		*control,		// control vector
+ 	double				std_dev)		// standard deviation
+ {
+ 	for (int i = 0; i < n; i++) {				// generate each point
+@@ -490,8 +490,8 @@
+ 	ANNpointArray		pa,				// point array
+ 	int					n,				// number of points
+ 	int					dim,			// dimension
+-	double				*center,		// center vector
+-	double				*std_dev)		// standard deviation vector
++	ANNcoord		*center,		// center vector
++	ANNcoord		*std_dev)		// standard deviation vector
+ {
+ 	for (int i = 0; i < n; i++) {
+ 		for (int d = 0; d < dim; d++) {
