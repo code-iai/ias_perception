@@ -1,0 +1,1 @@
+28.09.10 14:34:13 - Loaded learner from /work/klank/src/tumros-internal/perception/cop_plugins/cop_bvw_class/classifier.bin

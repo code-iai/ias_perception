@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+  <config>
+    <VisualFinder>
+      <std_vector>
+       <AlgorithmEval>
+          <FaceDetection scale="1.500000"
+                         cascade_name="../../cop/resource/haarcascade_frontalface_alt.xml"
+                         nested_cascade_name="../../cop/resource/haarcascade_eye_tree_eyeglasses.xml"                 />
+          <AlgType>1</AlgType>
+         <Eval>0.990000</Eval>
+         <AvgTime>0.000000</AvgTime>
+       </AlgorithmEval>
+      </std_vector>
+    </VisualFinder>
+    <VisLearner>
+      <Statistics />
+      <ProveAlgs />
+    </VisLearner>
+    <ImageInputSystem>
+      <std_vector>
+        <ROSCOPCamera TopicName="/cop/left/camera" SensorName="LeftCam"
+        CalibFileName="../../cop/resource/left_stereo_color_calib_next.dat" CamColor="0" >
+                  <RelPose loid="/LeftEyeCalc" />
+         </ROSCOPCamera>
+      </std_vector>
+    </ImageInputSystem>
+    <SignatureDB>
+      <SigDBRoot>
+        <Signature ElemID="1">
+          <DescibingElems>
+            <TableObjectDescriptor FileName="" ElemID="2">
+              <Class ClassName="DefaultTableObject" ElemID="3" />
+            </TableObjectDescriptor>
+          </DescibingElems>
+          <Classes>
+            <Class ClassName="DefaultTableObject" ElemID="3" />
+          </Classes>
+        </Signature>
+        <Signature ElemID="1044">
+                  <DescibingElems>
+                              <DetectedFace DescriptorQuality="1.000000"
+                              ElemID="1045">
+                                            <Class ClassName="Face"
+                                            ElemID="1046" />
+                                                        </DetectedFace>
+                                                                  </DescibingElems>
+                                                                            <Classes>
+                                                                                         <Class
+                                                                                         ClassName="Face"
+                                                                                         ElemID="1046"
+                                                                                         />
+                                                                                                   </Classes>
+                                                                                                           </Signature>
+                                                                                                       
+      </SigDBRoot>
+      <SigDBIndex>
+        <SigDBIndexClass2ID>
+        </SigDBIndexClass2ID>
+      </SigDBIndex>
+    </SignatureDB>
+    <AttentionManager>
+      <Attendants>
+        <AlgorithmEval>
+          <TableObjectAttention TopicName="/table_memory/table_mem_belief" />
+          <AlgType>4096</AlgType>
+          <Eval>0.50000</Eval>
+          <AvgTime>0.000000</AvgTime>
+        </AlgorithmEval>
+      </Attendants>
+    </AttentionManager>
+  </config>
