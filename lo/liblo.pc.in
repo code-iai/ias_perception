@@ -1,0 +1,7 @@
+
+Name: liblo
+Description: Library for Matrix Transformation Tree
+Version: 0.0-svn
+Libs: -L@CMAKE_INSTALL_PREFIX@/lib -llo
+Cflags: -I@CMAKE_INSTALL_PREFIX@/include
+

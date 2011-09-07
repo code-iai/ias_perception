@@ -1,0 +1,9 @@
+<package>
+<description>Located Object Library</description>
+<author>U. Klank</author>
+<license>GPL</license>
+<export>
+    <cpp cflags="-I${prefix}/local/include" lflags="-L${prefix}/local/lib -llo"/>
+</export>
+</package>
+

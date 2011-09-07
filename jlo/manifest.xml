@@ -1,0 +1,12 @@
+<package>
+<description>Located Object Server</description>
+<author>Ulrich F Klank</author>
+<license>GPL</license>
+<depend package="lo" />
+<depend package="roscpp" />
+<depend package="vision_srvs" />
+<depend package="tf" />
+<export>
+	<cpp cflags="-I${prefix}/srv/cpp -I${prefix}/msg/cpp" />
+</export>
+</package>

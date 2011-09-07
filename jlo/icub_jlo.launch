@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="tf" type="static_transform_publisher" name="static_pub_map_base" args="0 0 0 0 0 0 1 /map /base_link 100" output="screen" />
+  <node pkg="tf" type="static_transform_publisher" name="static_pub_base_cam_r" args="0 0 0 0 0 0 1 /base_link /right_camera 100" output="screen" />
+  <node pkg="tf" type="static_transform_publisher" name="static_pub_base_cam_l" args="0.05 0 0 0 0 0 1 /base_link /left_camera 100" output="screen" />
+  <node name="jlo" pkg="jlo" type="jlo" args="$(find jlo)/lo-init-icub.ini" respawn="false" cwd="node"/>
+</launch>

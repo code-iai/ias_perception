@@ -1,0 +1,18 @@
+Located Objects (short lo)
+Author: Ulrich Friedrich Klank
+
+This library enables a purely movement based synchronization of Location
+Data.
+
+It provides a simple interface that can keeps track of movements and newly
+apearing objects in order to be able to infer any relative position at the
+moment.
+
+This library depends on libxml2
+
+Implementation of a ros service that provides this tool to network
+participants can be found in the pacakge 'jlo'.
+An implemetation of such an participant linking against lo can be found in
+the package 'cop'
+An implementation of such an participant being independant of lo can be
+found in the package 'test_client' (e.g. query_jlo)

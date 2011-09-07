@@ -1,0 +1,3 @@
+<launch>
+  <node name="jlo" pkg="jlo" type="jlo" args="$(find jlo)/lo-init.ini" respawn="false" cwd="node"/>
+</launch>
