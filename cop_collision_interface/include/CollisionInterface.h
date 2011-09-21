@@ -9,7 +9,7 @@
 #include <vision_srvs/cop_get_object_shape.h>
 #include "RelPoseFactory.h"
 
-#include <mapping_msgs/CollisionObject.h>
+#include <arm_navigation_msgs/CollisionObject.h>
 
 
 #define COLLISION_PROCESSING_SERVICE_NAME "/tabletop_collision_map_processing/tabletop_collision_map_processing"
@@ -41,13 +41,13 @@ namespace cop
 
        m_copCollisionService = nh.advertiseService(servicename, &CollisionInterface::AddCollisionCB, this);
        m_copGeometricShapeService = nh.advertiseService(service_shape, &CollisionInterface::GetGeometricShape, this);
-       m_object_in_map_pub = nh.advertise<mapping_msgs::CollisionObject>("/collision_object", 10);
+       m_object_in_map_pub = nh.advertise<arm_navigation_msgs::CollisionObject>("/collision_object", 10);
 
 
     }
     bool AddCollisionCB(vision_srvs::cop_add_collision::Request& msg, vision_srvs::cop_add_collision::Response&  answer);
 
-    std::string AddCollisionObject(Signature* current_object, mapping_msgs::CollisionObject &object, bool ignore_pcd=false);
+    std::string AddCollisionObject(Signature* current_object, arm_navigation_msgs::CollisionObject &object, bool ignore_pcd=false);
     
     bool GetGeometricShape(vision_srvs::cop_get_object_shape::Request &msg, vision_srvs::cop_get_object_shape::Response &answer);
 

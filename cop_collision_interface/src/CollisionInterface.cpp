@@ -11,7 +11,7 @@ extern volatile bool g_stopall;
 using namespace cop;
 
 
-void SetShape( geometric_shapes_msgs::Shape& sout, const GeometricShape& shape);
+void SetShape( arm_navigation_msgs::Shape& sout, const GeometricShape& shape);
 
 typedef struct
 {
@@ -222,7 +222,7 @@ bool comparePointZ(const PointShape &pt1, const PointShape &pt2)
   return pt1.z < pt2.z;
 }
 
-std::string CollisionInterface::AddCollisionObject(Signature* sig, mapping_msgs::CollisionObject &object, bool ignore_pcd)
+std::string CollisionInterface::AddCollisionObject(Signature* sig, arm_navigation_msgs::CollisionObject &object, bool ignore_pcd)
 {
   if(sig == NULL)
   {
@@ -242,7 +242,7 @@ std::string CollisionInterface::AddCollisionObject(Signature* sig, mapping_msgs:
     {
       if(ignore_pcd && shape.type==4)
       {
-        shape.type = geometric_shapes_msgs::Shape::BOX;
+        shape.type = arm_navigation_msgs::Shape::BOX;
         shape.dimensions.resize(3);
 
         shape.dimensions[0] =
@@ -267,7 +267,7 @@ std::string CollisionInterface::AddCollisionObject(Signature* sig, mapping_msgs:
     }
   }
 
-  geometric_shapes_msgs::Shape answer_shape;
+  arm_navigation_msgs::Shape answer_shape;
   if(hasShape)
   {
     SetShape(answer_shape, shape);
@@ -281,7 +281,7 @@ std::string CollisionInterface::AddCollisionObject(Signature* sig, mapping_msgs:
   char objectid[90];
   sprintf(objectid, "Object%ld", sig->m_ID);
   object.id = objectid;
-  object.operation.operation = mapping_msgs::CollisionObjectOperation::ADD;
+  object.operation.operation = arm_navigation_msgs::CollisionObjectOperation::ADD;
   object.header.frame_id = "map";
   object.header.stamp = ros::Time::now();
   if(sig->GetObjectPose() == NULL)
@@ -413,7 +413,7 @@ string desired_frame
   printObjects(objects_info_.graspable_objects, objects_info_.collision_object_names);*/
 }
 
-void SetShape( geometric_shapes_msgs::Shape& sout, const GeometricShape& shape)
+void SetShape( arm_navigation_msgs::Shape& sout, const GeometricShape& shape)
 {
   sout.type = shape.type;
   size_t i;
