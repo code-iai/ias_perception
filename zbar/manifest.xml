@@ -1,0 +1,18 @@
+<package>
+  <description brief="zbar">
+    ZBar is an open source software suite for reading bar codes from various sources, such as video streams, image files and raw intensity sensors. It supports many popular symbologies (types of bar codes) including EAN-13/UPC-A, UPC-E, EAN-8, Code 128, Code 39, Interleaved 2 of 5 and QR Code.
+  </description>
+  <author> Jeff Brown (spadix@users.sourceforge.net)</author>
+  <license>GNU LGPL 2.1</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://zbar.sourceforge.net/index.html</url>
+
+  <export>
+    <cpp cflags="-I${prefix}/include/" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lzbar -lzbargtk -lzbarqt"/>
+  </export>
+
+  <rosdep name="libmagickwand-dev"/>
+  <rosdep name="libmagick++-dev"/>
+</package>
+
+

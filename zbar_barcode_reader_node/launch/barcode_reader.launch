@@ -1,0 +1,12 @@
+<launch>
+  <node pkg="zbar_barcode_reader_node" type="zbar_barcode_reader_node" name="barcode_reader_node" output="screen" respawn="false">
+  <param name="input_image_topic" type="string" value="/image_raw" />
+  <param name="link1" type="string" value="http://www.barcoo.com/api/get_product_complete?pi=" />
+  <param name="link2" type="string" value="&amp;pins=ean&amp;format=xml&amp;source=ias-tum" />
+  <param name="tag1" type="string" value="answer" />
+  <param name="tag2" type="string" value="picture_high" />
+  <param name="tag3" type="string" value="picture_low" />
+  <param name="image_pattern" type="string" value="&lt;meta property=&quot;og:image&quot; content=&quot;" />
+
+ </node>
+</launch>
