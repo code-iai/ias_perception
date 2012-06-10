@@ -11,8 +11,8 @@
     <cpp cflags="-I${prefix}/include/" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lzbar -lzbargtk -lzbarqt"/>
   </export>
 
-  <rosdep name="libmagickwand-dev"/>
-  <rosdep name="libmagick++-dev"/>
+  <depend name="libmagickwand-dev"/>
+  <depend name="libmagick++-dev"/>
 </package>
 
 
