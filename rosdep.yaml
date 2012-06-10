@@ -8,4 +8,8 @@ libtinyxml:
     11.04: libtinyxml-dev
     oneiric: libtinyxml-dev
 
+libmagickwand-dev:
+  ubuntu: libmagickwand-dev
 
+libmagick++-dev:
+  ubuntu: libmagick++-dev

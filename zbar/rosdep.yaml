@@ -1,5 +1,0 @@
-libmagickwand-dev:
-  ubuntu: libmagickwand-dev
-
-libmagick++-dev:
-  ubuntu: libmagick++-dev
