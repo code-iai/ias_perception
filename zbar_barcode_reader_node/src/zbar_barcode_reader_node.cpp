@@ -14,6 +14,7 @@
 #include <highgui.h>
 #include <zbar_barcode_reader_node/enable_barcode_reader.h>
 #include <cv_bridge/cv_bridge.h>
+#include <fstream>
 //Magick++ lib
 #include <Magick++.h>
 //zbar
@@ -21,6 +22,7 @@
 
 using namespace std;
 using namespace zbar;
+using namespace boost;
 
 class BarcodeReaderNode {
 	std:: string link1_;// = "http://www.barcoo.com/api/get_product_complete?pi=";
@@ -84,6 +86,7 @@ public:
 	  	  	res.title.data = product_title;
 	  	  	res.subtitle.data = product_producer;
 	  	  	res.category_key.data = product_category;
+	  	  	//res.path = "";
 	  	  	res.image_msg = *ros_image;
 	  	  	enable_barcode_reader_ = 0;
 	  	    image_received_ = 0;
@@ -321,8 +324,8 @@ public:
   void imageCallback(const sensor_msgs::ImageConstPtr& msg_ptr)
   {
 	  
-	  if(!enable_barcode_reader_)
-		  return;
+	  /*if(!enable_barcode_reader_)
+		  return;*/
     ROS_INFO("[BarcodeReaderNode: ] Image received");
     try
       {
@@ -369,6 +372,7 @@ public:
       ss << symbol->get_data();
       msg.data = ss.str();
       barcode_pub_.publish(msg);
+      cv::imwrite("/home/banacer/ros_workspace/yes.jpg",cv_bridge_ptr_->image);
     }
     if (n == 0)
     {
@@ -384,7 +388,7 @@ public:
     	return;
     }
 
-    std::string buffer;
+    /*std::string buffer;
     //Get xml file from barcoo database
     int res = getBarcooXML(ss.str(), buffer);
     if(res != 1)
@@ -432,6 +436,11 @@ public:
     {
     	cv::Mat  imgTmp; // image object
     	getImage (pictureLink ,& imgTmp);
+    	string fileName = "img.jpg";
+    	cv::imwrite(fileName,imgTmp);
+    	//path p (fileName);
+    	//std::cout << "Hey file path is: " << p.string();
+
     	// display image
     	//publish image
     	if (!(imgTmp.empty()))
@@ -448,7 +457,7 @@ public:
     	}
     	image_received_ = 1;
     }
-    cv::waitKey(3);
+    cv::waitKey(3);*/
   }
 
 protected:

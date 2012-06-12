@@ -3,4 +3,5 @@ int64 enable
 std_msgs/String title
 std_msgs/String subtitle
 std_msgs/String category_key
+std_msgs/String path
 sensor_msgs/Image image_msg

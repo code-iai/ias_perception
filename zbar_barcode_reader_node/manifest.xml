@@ -12,9 +12,11 @@
   <depend package="opencv2"/>
   <depend package="cv_bridge"/>
   <depend package="image_transport"/>
-  <depend package="sensor_msgs"/>  
+  <depend package="sensor_msgs"/>
+  <depend package="comp_barcoo"/>
   <rosdep name="libcurl"/>
-  <rosdep name="libtinyxml"/>   
+  <rosdep name="libtinyxml"/>
+  <rosdep name="libboost-all-dev"/>   
   
 </package>
 

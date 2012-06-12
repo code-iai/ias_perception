@@ -13,3 +13,8 @@ libmagickwand-dev:
 
 libmagick++-dev:
   ubuntu: libmagick++-dev
+
+libboost-all-dev:
+  ubuntu: 
+     11.04:libboost-all-dev
+     oneiric: libboost-all-dev 
