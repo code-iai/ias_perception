@@ -29,19 +29,19 @@ class zbar_image_reader
 	ros::ServiceClient client;
 	comp_barcoo::send_barcode srv;
 	public:
-	zbar_image_reader(ros::NodeHandle &n,string img_path): n_(n), it_(n_)
+	zbar_image_reader(ros::NodeHandle &n,string img_path, int toKnowrob): n_(n), it_(n_)
 	{
 		cv::Mat image = cv::imread(img_path,0);
 		client = n.serviceClient<comp_barcoo::send_barcode>("/send_barcode");
 
-		extract_publish_barcode(image);
+		extract_publish_barcode(image, toKnowrob);
 	}
 
 	~zbar_image_reader() {
 		// TODO Auto-generated destructor stub
 	}
 
-	void extract_publish_barcode(cv::Mat img)
+	void extract_publish_barcode(cv::Mat img,int to_knowrob)
 	{
 		// create a reader
 		ImageScanner scanner;
@@ -74,6 +74,7 @@ class zbar_image_reader
 
 		  ss << symbol->get_data();
 		  srv.request.barcode.data = ss.str();
+		  srv.request.knowrob = to_knowrob;
 		  if (client.call(srv))
 		  {
 			  std::cout << "received: " << srv.response.recieved << "\n";
@@ -100,7 +101,7 @@ int main(int argc, char** argv)
   ros::AsyncSpinner spinner(1); // Use 4 threads
   spinner.start();
   ros::NodeHandle n("~");
-  zbar_image_reader reader(n,argv[1]);
+  zbar_image_reader reader(n,argv[1],atoi(argv[2]));
   ros::spinOnce();
 
   return 0;
